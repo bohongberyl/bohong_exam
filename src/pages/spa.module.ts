@@ -7,13 +7,15 @@ import { CommonModule } from '@angular/common';
 import { HomeModule } from './home/home.module';
 import { UserModule } from './user/user.module';
 import { AboutModule } from './about/about.module';
+import { ProductModule } from './product/product.module';
 
 @NgModule({
   imports: [
     CommonModule,
     HomeModule,
     UserModule,
-    AboutModule
+    AboutModule,
+    ProductModule
   ],
 })
 export class SPAModule { }

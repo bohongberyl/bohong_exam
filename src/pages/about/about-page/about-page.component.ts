@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Meta, Title } from '@angular/platform-browser';
 
+import { ProductService } from '../../product/product.service'
+
+
 @Component({
   selector: 'app-about-page',
   templateUrl: './about-page.component.html',
@@ -8,7 +11,10 @@ import { Meta, Title } from '@angular/platform-browser';
 })
 export class AboutPageComponent implements OnInit {
 
-    constructor(meta: Meta, title: Title) {
+    users:Array<any> = [];
+    constructor(meta: Meta, title: Title, private productServ:ProductService) {
+      this.users = this.productServ.getProducts()
+
     title.setTitle('My About Page');
 
     meta.addTags([ 

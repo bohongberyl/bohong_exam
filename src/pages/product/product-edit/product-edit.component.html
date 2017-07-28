@@ -1,0 +1,30 @@
+<p>
+  <span *ngIf="isNew">新增用户</span>
+  <span *ngIf="!isNew">编辑用户:{{this.productId}}</span>
+  <button (click)="back()">返回</button>
+</p>
+
+<div>
+姓名：
+<input type="text" [(ngModel)]="product.name"/>
+</div>
+
+<div>
+性别：
+<select [(ngModel)]="product.sex">
+  <option value="M">男</option>
+  <option value="F">女</option>
+</select>
+</div>
+
+<div>
+项目地址：
+<input type="text" [(ngModel)]="product.project"/>
+</div>
+
+<div>
+Exam1分数：
+<input type="text" [(ngModel)]="product.exam1"/>
+</div>
+
+<button routerLink="/product" (click)="save()">提交</button>
