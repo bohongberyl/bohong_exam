@@ -33,10 +33,10 @@ export class ProductEditComponent implements OnInit,OnDestroy {
       console.log(data)
       this.location.back();
     })
-    this.productServ.saveProduct(this.product).subscribe(data=>{
-      console.log(data)
-      this.location.back();        
-    })
+  //  this.productServ.saveProduct(this.product).subscribe(data=>{
+  //    console.log(data)
+  //    this.location.back();        
+  //  })
   }
   ngOnInit() {
         this.route.params.subscribe(params=>{
