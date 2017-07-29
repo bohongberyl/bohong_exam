@@ -16,7 +16,7 @@ export class ProductEditComponent implements OnInit,OnDestroy {
   isNew:boolean = false;
 
   // Subscribe Declaration
-  getUserSubscribe:any;
+  getProductSubscribe:any;
   
   constructor(private route: ActivatedRoute,
   private productServ:ProductService,
@@ -26,11 +26,13 @@ export class ProductEditComponent implements OnInit,OnDestroy {
     this.location.back();
   }
   save(){
-    this.productServ.products.push(this.product)
+     if(this.isNew){
+       this.productServ.products.push(this.product)
+      }
     this.location.back();
   }
   ngOnInit() {
-    this.getUserSubscribe = this.route.params.subscribe(params=>{
+    this.getProductSubscribe = this.route.params.subscribe(params=>{
       this.getProduct(params['sid']).then(product=>{
       console.log(product)
       this.productId = product.id;
@@ -41,7 +43,7 @@ export class ProductEditComponent implements OnInit,OnDestroy {
     })
   }
   ngOnDestroy(){
-    this.getUserSubscribe.unsubscribe();
+    this.getProductSubscribe.unsubscribe();
   }
 
   getProduct(id: any): Promise<any> {

@@ -13,7 +13,7 @@ export class ProductItemComponent implements OnInit {
   @Output() productClick = new EventEmitter<any>();
   constructor(private productServ:ProductService) { 
   }
-  onUserClick(){
+  onProductClick(){
     this.productClick.emit(this.product)
   }
   check(){

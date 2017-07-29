@@ -52,17 +52,17 @@ export class ProductListComponent implements OnInit {
       return b[type] - a[type];
     });
   }
-  sortByRadom() {
+   sortByRadom() {
     // 参考MDN Array操作的API文档 Math相关方法
     // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math
- this.products.forEach((user,index)=>{
-    let j = Math.floor(Math.random() * index);
-     [this.products[index - 1], this.products[j]] = [this.products[j], this.products[index - 1]];
+  this.products.forEach((product,index)=>{
+    product.tempIndex = Math.random();
   })
+    this.sortByAsccending("tempIndex");
   }
   constructor(meta: Meta, title: Title, private productServ:ProductService) {
     this.products = this.productServ.getProducts()
- 
+
     // Set SEO
     title.setTitle('My Home Page');
 
