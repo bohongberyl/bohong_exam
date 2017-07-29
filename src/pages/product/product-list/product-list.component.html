@@ -31,6 +31,6 @@
 <div class="row table-row" *ngFor="let product of searchResult">
   <app-product-item [product]="product" (productClick)="selectProduct = $event"></app-product-item>
 </div>
-<div class="row table-row" *ngFor="let product of products">
+<div class="row table-row" *ngFor="let product of product">
   <app-product-item [product]="product" (productClick)="selectProduct = $event"></app-product-item>
 </div>
