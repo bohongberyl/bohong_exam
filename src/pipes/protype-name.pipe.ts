@@ -1,10 +1,9 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
-  name: 'modelpName'
+  name: 'protypeName'
 })
-export class ModelpNamePipe implements PipeTransform {
-
+export class ProtypeNamePipe implements PipeTransform {
   transform(value: any, args?: any): any {
     if(value =="A"){
       return "AL102"

@@ -17,7 +17,11 @@ export class ProductItemComponent implements OnInit {
     this.productClick.emit(this.product)
   }
   check(){
-    this.product.check = true;
+    if(this.product.check&&this.product.check==true){
+      this.product.check = false;
+    }else{
+      this.product.check = true
+    }
   }
   isChecked(){
     if(this.product.check&&this.product.check==true){
@@ -25,14 +29,6 @@ export class ProductItemComponent implements OnInit {
     }else{
       return false
     }
-  }
-  delete(){
-    let id = this.product.id
-    this.productServ.products.forEach((item,index,array)=>{
-      if(item.id == id){
-        array.splice(index,1)
-      }
-    })
   }
   ngOnInit() {
   }

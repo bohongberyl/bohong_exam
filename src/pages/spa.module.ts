@@ -8,6 +8,7 @@ import { HomeModule } from './home/home.module';
 import { UserModule } from './user/user.module';
 import { AboutModule } from './about/about.module';
 import { ProductModule } from './product/product.module';
+import { RxjsModule } from './rxjs/rxjs.module';
 
 @NgModule({
   imports: [
@@ -15,7 +16,8 @@ import { ProductModule } from './product/product.module';
     HomeModule,
     UserModule,
     AboutModule,
-    ProductModule
+    ProductModule,
+    RxjsModule
   ],
 })
 export class SPAModule { }

@@ -7,7 +7,12 @@ import {
   Title
 } from '@angular/platform-browser';
 
+import { Http } from '@angular/http'
+
 import {ProductService} from "../product.service";
+
+import {Parse} from "../../../cloud/parse"
+
 @Component({
   selector: 'app-product-list',
   templateUrl: './product-list.component.html',
@@ -21,19 +26,7 @@ export class ProductListComponent implements OnInit {
   };
   searchResult:Array<any>;
   products:Array<any>=[];
-  deleteLast() {
-    this.products.pop();
-  }
-  search(){
-    this.searchResult = this.products.filter(item=>{
-      let result = String(item[this.searchType]).match(this.searchText)
-      if(result){
-        return true
-      }else{
-        return false
-      }
-    })
-  }
+
   getUserClick(ev){
     this.selectProduct = ev
     console.log(ev);
@@ -52,7 +45,7 @@ export class ProductListComponent implements OnInit {
       return b[type] - a[type];
     });
   }
-   sortByRadom() {
+  sortByRadom() {
     // 参考MDN Array操作的API文档 Math相关方法
     // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math
   this.products.forEach((product,index)=>{
@@ -60,9 +53,19 @@ export class ProductListComponent implements OnInit {
   })
     this.sortByAsccending("tempIndex");
   }
-  constructor(meta: Meta, title: Title, private productServ:ProductService) {
-    this.products = this.productServ.getProducts()
+  constructor(meta: Meta, title: Title,private http:Http, private productServ:ProductService) {
 
+    let query = new Parse.Query("Product",http)
+    query.find().subscribe(data=>{
+      console.log(data)
+      this.products = data
+    })
+
+    // this.productServ.getProducts().subscribe(data=>{
+    //   console.log(data)
+    // })
+    
+ 
     // Set SEO
     title.setTitle('My Home Page');
 
@@ -80,20 +83,6 @@ export class ProductListComponent implements OnInit {
       },
     ]);
     // end of SEO
-  }
-
-  testTempproducts(){
-    console.log(this.products.length);
-    let tempproducts:Array<any> = []
-    this.products.forEach(item=>{
-      tempproducts.push(item)
-    })
-    tempproducts.pop()
-    tempproducts.pop()
-    tempproducts.pop()
-    tempproducts.pop()
-    tempproducts.pop()
-    console.log(tempproducts.length);
   }
 
   ngOnInit() {}

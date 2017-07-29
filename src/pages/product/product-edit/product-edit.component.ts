@@ -26,42 +26,37 @@ export class ProductEditComponent implements OnInit,OnDestroy {
     this.location.back();
   }
   save(){
-     if(this.isNew){
-       this.productServ.products.push(this.product)
-      }
-    this.location.back();
+    this.product.price = Number(this.product.price)
+    this.product.sumnum = Number(this.product.sumnum)
+    this.product.sumacc = Number(this.product.sumacc)
+    this.productServ.saveProduct(this.product).subscribe(data=>{
+      console.log(data)
+      this.location.back();
+    })
+    this.productServ.saveProduct(this.product).subscribe(data=>{
+      console.log(data)
+      this.location.back();        
+    })
   }
   ngOnInit() {
-    this.getProductSubscribe = this.route.params.subscribe(params=>{
-      this.getProduct(params['sid']).then(product=>{
-      console.log(product)
-      this.productId = product.id;
-      this.product = product
-    }).catch(err=>{
-      console.log(err)
-    })
+        this.route.params.subscribe(params=>{
+          let id = params['id']
+          if(id=="new"){
+            let product = {name:""}
+            this.isNew = true;
+            this.product = product
+          }else{
+            this.productServ.getProductById(id).subscribe(product=>{
+            console.log(product)
+            // this.productId = product.objectId;
+            this.product = product
+        })
+      }
+
     })
   }
   ngOnDestroy(){
-    this.getProductSubscribe.unsubscribe();
   }
 
-  getProduct(id: any): Promise<any> {
-    
-    let p = new Promise((resolve,reject)=>{
-      if(id=="new"){
-        let product = {name:""}
-        this.isNew = true;
-        resolve(product)
-      }
-      let product = this.productServ.products.find(item=>item.id == id)
-      if(product){
-        resolve(product)
-      }else{
-        reject("product not found")
-      }
-    })
-    return p
-}
 
 }

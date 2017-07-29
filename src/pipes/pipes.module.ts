@@ -1,17 +1,17 @@
 import { NgModule } from '@angular/core';
 
-import { ModelpNamePipe } from './modelp-name.pipe';
+import { ProtypeNamePipe } from './protype-name.pipe';
 import { TokPipe } from './tok.pipe';
 
 @NgModule({
   imports: [
   ],
   declarations: [
-    ModelpNamePipe,
+    ProtypeNamePipe,
     TokPipe
   ],
   exports:[
-    ModelpNamePipe,
+    ProtypeNamePipe,
     TokPipe
   ]
 })

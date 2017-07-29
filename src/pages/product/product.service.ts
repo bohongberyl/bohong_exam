@@ -1,98 +1,160 @@
 import { Injectable } from "@angular/core";
+import { Http, Response, Headers } from "@angular/http"
+
+import { Location } from '@angular/common';
+
+
+import {BehaviorSubject} from 'rxjs/BehaviorSubject';
+import {Observable} from 'rxjs/Observable';
+// import 'rxjs/add/observable/merge';
+import 'rxjs/add/observable/zip';
+import 'rxjs/add/observable/fromPromise';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/startWith';
 
 @Injectable()
 export class ProductService{
     isLogined:boolean = false;
     products: Array < any > = [{
-      'id': 10011,
-     'name':'索尼',
-     'modelp':'A',
-     'price':2334,
-     'sumacc': 55, // 10 10 5 5 20 5
-     'sumnum': 3,
-     'agent': '李丽'
+     'name':'aa',
+     'protype':'A',
+     'agent':'',
+     'price': 85, 
+     'sumnum': 0,
+     'sumacc': 0
     },
     {
-     'id': 10012,
-     'name':'索尼',
-     'modelp':'B',
-     'price':4552,
-     'sumacc': 85, // 10 10 5 20 20 20 原始数据加分：修改了函数变量命名
-     'sumnum': 2,
-     'agent': '张宇'
-    },
-    {
-     'id': 10013,
-     'name':'佳能',
-     'modelp':'C',
-     'price':3114,
-     'sumacc': 80, // 10 10 5 20 20 15
-     'sumnum': 4,
-     'agent': '李斌'
-    },
-    {
-     'id': 10014,
-     'name':'尼康',
-     'modelp':'B',
-     'price':2999,
-     'sumacc': 75, // 5 10 5 15 20 20 未修改README.md
-     'sumnum': 6,
-     'agent':'鹿晗'
-    },
-    {
-     'id': 10015,
-     'name':'松下',
-     'modelp':'B',
-     'price':4999,
-     'sumacc': 50, // 5 5 5 15 15 15 未修改readme，版本提交非项目根目录
-     'sumnum': 1,
-     'agent': '邓超'
-    },
-    {
-     'id': 10016,
-     'name':'松下',
-     'modelp':'A',
-     'price':3888,
-     'sumacc': 75, // 10 10 5 15 15 20
-     'sumnum': 3,
-     'agent': '李晨'
-    },
-    {
-     'id': 10017,
-     'name':'尼康',
-     'modelp':'C',
-     'price':2998,
-     'sumacc': 75, // 10 10 10 15 20 10
-     'sumnum': 6,
-     'agent': '娜扎'
-    },
-    {
-     'id': 10018,
-     'name':'佳能',
-     'modelp':'C',
-     'price':3099,
-     'sumacc': 40, // 5 10 5 5 10 5 未修改readme
-     'sumnum': 5,
-     'agent': '陈宇'
-    },
-
-    {
-     'id': 10019,
-     'name':'松下',
-     'modelp':'B',
-     'price':4099,
-     'sumacc': 85, // 10 10 5 20 20 20
-     'sumnum': 2,
-     'agent': '李娜'
+     'name':'willwangyue',
+     'protype':'B',
+     'agent':'willwangyue',
+     'price': 85,
+     'sumnum': 11,
+     'sumacc': 0
     }
   ];
+    http:Http
+    constructor(http:Http,private location:Location){
+        this.http = http
+    }
+    delete(obj){
+        this.deleteProductById(obj.objectId).subscribe(data=>{
+            console.log(data);
+            this.location.go("/product")
+        })
 
-    constructor(){
+        // this.products.forEach((item,index,array)=>{
+        //     if(item.id == id){
+        //         array.splice(index,1)
+        //     }
+        // })
+    }
+    search(type,value){
+        this.products.sort((a,b)=>{
+        let result1 = String(a[type]).match(value)
+        let result2 = String(b[type]).match(value)
 
+        return Number(result2)-Number(result1);
+        });
+    }
+    deleteChecked(){
+        let checkList = this.products.filter(item=>item.check==true)
+        checkList.forEach(item=>{
+            this.delete(item)
+        })
     }
 
-    getProducts(){
-        return this.products;
+    getProducts():Observable<any[]>{
+        // 1. 拼接HTTP请求所需的URL和Headers
+        let serverURL = "http://host.qh-class.com:2337/parse"
+        let path = "/classes/"
+        let className = "Product"
+        let url = serverURL+path+className
+
+        let headers:Headers = new Headers({
+            "X-Parse-Application-Id":"dev",
+            "X-Parse-Master-Key":"angulardev",
+            // "X-Parse-Session-Token":"r:059bbbebdc201de090f16fe9716b43bf",
+            "Content-Type":"application/json; charset=utf-8"
+        })
+
+        // 2. 发起HTTP GET查询请求
+        return this.http.get(url,{ headers:headers })
+        .map(data=>data.json())
+        .map(data=>data.results)        
+    }
+    deleteProductById(objectId):Observable<any>{
+            // 1. 拼接HTTP请求所需的URL和Headers
+            let serverURL = "http://host.qh-class.com:2337/parse"
+            let path = "/classes/"
+            let className = "Product"
+            let url = serverURL+path+className+"/"+objectId
+
+            let headers:Headers = new Headers({
+                "X-Parse-Application-Id":"dev",
+                "X-Parse-Master-Key":"angulardev",
+                // "X-Parse-Session-Token":"r:059bbbebdc201de090f16fe9716b43bf",
+                "Content-Type":"application/json; charset=utf-8"
+            })
+
+            // 2. 发起HTTP DELETE查询请求
+            return this.http.delete(url,{ headers:headers })
+            .map(data=>data.json())
+        }
+    getProductById(objectId):Observable<any>{
+        // 1. 拼接HTTP请求所需的URL和Headers
+        let serverURL = "http://host.qh-class.com:2337/parse"
+        let path = "/classes/"
+        let className = "Product"
+        let url = serverURL+path+className+"/"+objectId
+
+        let headers:Headers = new Headers({
+            "X-Parse-Application-Id":"dev",
+            "X-Parse-Master-Key":"angulardev",
+            // "X-Parse-Session-Token":"r:059bbbebdc201de090f16fe9716b43bf",
+            "Content-Type":"application/json; charset=utf-8"
+        })
+
+        // 2. 发起HTTP GET查询请求
+        return this.http.get(url,{ headers:headers })
+        .map(data=>data.json())
+    }
+
+    saveProduct(body?):Observable<any[]>{
+        // 1. 拼接HTTP请求所需的URL和Headers
+        let serverURL = "http://host.qh-class.com:2337/parse"
+        let path = "/classes/"
+        let className = "Product"
+        let url = serverURL+path+className
+
+        let headers:Headers = new Headers({
+            "X-Parse-Application-Id":"dev",
+            "X-Parse-Master-Key":"angulardev",
+            // "X-Parse-Session-Token":"r:059bbbebdc201de090f16fe9716b43bf",
+            "Content-Type":"application/json; charset=utf-8"
+        })
+
+        // 2. 发起HTTP POST或PUT提交请求
+        if(!body){
+            body = {name:"pro",agent:"beryl",price:66}
+        }
+
+        if(body.objectId){
+            url += "/"+body.objectId
+            // body.objectId = undefined
+            return this.http.put(url,{
+                name:body.name,
+                price:body.price,
+                sumnum:body.sumnum,
+                sumacc:body.sumacc,
+                agent:body.agent,
+                protype:body.protype,
+            },{ headers:headers })
+            .map(data=> data.json())
+        }else{
+            return this.http.post(url,body,{ headers:headers })
+            .map(data=> data.json())
+        }
+
     }
 
 }

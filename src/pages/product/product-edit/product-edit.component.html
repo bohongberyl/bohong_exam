@@ -4,12 +4,6 @@
   <button (click)="back()">返回</button>
 </p>
 
-
-<div>
-产品ID：
-<input type="text" [(ngModel)]="product.id"/>
-</div>
-
 <div>
 产品名称：
 <input type="text" [(ngModel)]="product.name"/>
@@ -17,7 +11,7 @@
 
 <div>
 产品型号：
-<select [(ngModel)]="product.modelp">
+<select [(ngModel)]="product.protype">
   <option value="A">AL102</option>
   <option value="B">BY003</option>
   <option value="C">CM002</option>
@@ -25,8 +19,8 @@
 </div>
 
 <div>
-销售单价：
-<input type="text" [(ngModel)]="product.price"/>
+代理人：
+<input type="text" [(ngModel)]="product.agent"/>
 </div>
 
 <div>
@@ -35,8 +29,14 @@
 </div>
 
 <div>
-代理人：
-<input type="text" [(ngModel)]="product.agent"/>
+销售单价：
+<input type="text" [(ngModel)]="product.price"/>
+</div>
+
+
+<div>
+销售总额：
+<input type="text" [(ngModel)]="product.sumacc"/>
 </div>
 
 <button routerLink="/product" (click)="save()">提交</button>
