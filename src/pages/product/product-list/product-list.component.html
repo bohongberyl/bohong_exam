@@ -21,7 +21,7 @@
       <div class="col-1">选择 </div>
       <div class="col-1" (click)="sortByAsccending('id')">产品ID </div>
       <div class="col-1" (click)="sortByAsccending('name')">产品名称 </div>
-      <div class="col-1" (click)="sortByAsccending('model')">产品型号 </div>
+      <div class="col-1" (click)="sortByAsccending('modelp')">产品型号 </div>
       <div class="col-1" (click)="sortByAsccending('price')">销售单价 </div>
       <div class="col-1" (click)="sortByDesccending('sumacc')">销售总额 </div>
       <div class="col-1" (click)="sortByDesccending('sumnum')">销售数量 </div>
@@ -31,6 +31,6 @@
 <div class="row table-row" *ngFor="let product of searchResult">
   <app-product-item [product]="product" (productClick)="selectProduct = $event"></app-product-item>
 </div>
-<div class="row table-row" *ngFor="let product of product">
+<div class="row table-row" *ngFor="let product of products">
   <app-product-item [product]="product" (productClick)="selectProduct = $event"></app-product-item>
 </div>
