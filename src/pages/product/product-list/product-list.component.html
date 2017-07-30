@@ -3,7 +3,7 @@
     <div class="search-area" style="height:60px;">
       <select [(ngModel)]="searchType" style="float:left;">
         <option value="name">产品名称</option>
-        <option value="agent">代理人</option>
+        <option value="agent">销售人员</option>
       </select>
 <input style="float:left;" 
   [(ngModel)]="searchText"/>
@@ -20,7 +20,7 @@
       <div class="col-1">选择 </div>
       <div class="col-1" (click)="sortByAsccending('name')">产品名称 </div>
       <div class="col-1" (click)="sortByAsccending('protype')">产品型号 </div>
-      <div class="col-1" (click)="sortByAsccending('agent')">代理人 </div>
+      <div class="col-1" (click)="sortByAsccending('agent')">销售人员 </div>
       <div class="col-1" (click)="sortByDesccending('price')">销售单价 </div>
       <div class="col-1" (click)="sortByDesccending('sumnum')">销售数量 </div>
       <div class="col-1" (click)="sortByDesccending('sumacc')">销售总额 </div>

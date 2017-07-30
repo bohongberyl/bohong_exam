@@ -40,6 +40,7 @@ export class ProductService{
         this.deleteProductById(obj.objectId).subscribe(data=>{
             console.log(data);
             this.location.go("/product")
+           // this.location.back();
         })
 
         // this.products.forEach((item,index,array)=>{

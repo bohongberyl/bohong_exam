@@ -48,10 +48,10 @@ export class ProductListComponent implements OnInit {
   sortByRadom() {
     // 参考MDN Array操作的API文档 Math相关方法
     // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math
-  this.products.forEach((product,index)=>{
-    product.tempIndex = Math.random();
-  })
-    this.sortByAsccending("tempIndex");
+      this.products.forEach((product,index)=>{
+        product.tempIndex = Math.random();
+       })
+      this.sortByAsccending("tempIndex");
   }
   constructor(meta: Meta, title: Title,private http:Http, private productServ:ProductService) {
 
